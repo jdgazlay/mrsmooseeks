@@ -128,6 +128,8 @@ var sketchProc = function(p) {
     var canvas = p.createCanvas(1000, 772.72);
     brickXs.push(background_image.width*2);
     background = new Background(background_image);
+    p.createP("Press spacebar to jump.");
+    p.createP("Press left & right arrow keys to move");
   };
 
   var PickSound = function() {
