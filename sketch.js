@@ -111,7 +111,7 @@ var sketchProc = function(p) {
 
   p.preload = function() {
     p.soundFormats("m4a");
-    brickImg = p.loadImage("https://crossorigin.me/http://img4.imagetitan.com/img4/small/15/15_brick.jpg");
+    // brickImg = p.loadImage("https://crossorigin.me/http://img4.imagetitan.com/img4/small/15/15_brick.jpg");
     marioStanding = p.loadImage("https://cdn.pbrd.co/images/H9XEWb5.png");
     marioMoving = p.loadImage("https://cdn.pbrd.co/images/H9XEoJo.png");
     start_screen = p.loadImage("assets/title.png");
