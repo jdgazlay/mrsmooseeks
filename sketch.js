@@ -11,6 +11,7 @@ var sketchProc = function(p) {
   var brickImg;
   var marioStanding;
   var marioMoving;
+  var jerryStanding;
 
   var Mario = function(x, y, m) {
     this.x = x;
@@ -80,22 +81,31 @@ var sketchProc = function(p) {
     }
   }
 
-  var Background = function(background_image) {
-    this.x = 0;
-    this.y = 0;
+  var Background = function(background_image, xVal, yVal) {
+    this.x = xVal;
+    this.y = yVal;
     this.acc = ACCELERATION;
     this.image = background_image;
 
     this.draw = function() {
       this.x -= this.acc;
       p.image(this.image,this.x,this.y);
+      if (this.x === (xVal - 4448)) {
+        this.x += 4448
+      }
     }
   }
 
 
-  var Enemy = function() {
+  var Jerry = function(x, y) {
+    this.x = x;
+    this.y = y;
 
-  };
+    this.draw = function() {
+      this.x -= (ACCELERATION * 2);
+      p.image(jerryStanding,this.x,this.y);
+    }
+  }
 
   processInput = function() {
     if(keys[37]) mario.moveLeft();
@@ -104,8 +114,15 @@ var sketchProc = function(p) {
   };
 
   var mario = new Mario(30, 750, 3);
+  var j1 = p.random(4448)
+  var j2 = p.random(4448)
+  var j3 = p.random(4448)
+  var jerry1 = new Jerry(j1, 550)
+  var jerry2 = new Jerry(j2, 550)
+  var jerry3 = new Jerry(j3, 550)
   var start_button = new StartButton();
   var background;
+  var background2;
 
   var brickXs = [];
 
@@ -121,13 +138,15 @@ var sketchProc = function(p) {
     fulfillMyPurpose = p.loadSound('assets/fulfill_my_purpose.m4a');
     hesTryin = p.loadSound("assets/Oooo He's Tryin.m4a");
     background_image = p.loadImage("assets/background.png");
+    jerryStanding = p.loadImage("assets/jerry.png");
   };
 
   p.setup = function() {
     p.frameRate(30);
     var canvas = p.createCanvas(1000, 772.72);
     brickXs.push(background_image.width*2);
-    background = new Background(background_image);
+    background = new Background(background_image, 0, 0);
+    background2 = new Background(background_image, 4448, 0);
     p.createP("Press spacebar to jump.");
     p.createP("Press left & right arrow keys to move");
   };
@@ -154,18 +173,18 @@ var sketchProc = function(p) {
         background_music.stop();
       }
     } else {
-
       p.background(227, 254, 255);
       p.fill(130, 79, 43);
       p.rect(0, p.height*0.90, p.width, p.height*0.10);
-
       processInput();
-
       background.draw();
+      background2.draw();
       mario.checkOnGround();
       mario.draw();
+      jerry1.draw();
+      jerry2.draw();
+      jerry3.draw();
     }
-
   };
 
   p.keyPressed = function(){
