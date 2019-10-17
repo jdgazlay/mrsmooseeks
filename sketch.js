@@ -1,19 +1,19 @@
-
+/* eslint-disable */
 
 const ACCELERATION = 4;
 const GRAVITY = 9.8;
-var is_started = false;
+let is_started = false;
 
 
-var sketchProc = function(p) {
-  var keys = [];
-  var cando;
-  var brickImg;
-  var marioStanding;
-  var marioMoving;
-  var jerryStanding;
+const sketchProc = function (p) {
+  const keys = [];
+  let cando;
+  let brickImg;
+  let marioStanding;
+  let marioMoving;
+  let jerryStanding;
 
-  var Mario = function(x, y, m) {
+  const Mario = function (x, y, m) {
     this.x = x;
     this.y = y;
     this.img = marioStanding;
@@ -23,16 +23,16 @@ var sketchProc = function(p) {
     this.ya = 0;
     this.onGround = false;
 
-    this.draw = function() {
-      //p.fill(255, 0, 0);
+    this.draw = function () {
+      // p.fill(255, 0, 0);
       this.x = p.constrain(this.x, 0, p.width - 40);
-      this.y = p.constrain(this.y, 0, p.height-200);
+      this.y = p.constrain(this.y, 0, p.height - 200);
       p.image(this.img, this.x, this.y, 64, 100);
       this.y -= this.ya;
       this.reduceYAcceleration();
     };
 
-    this.hop = function() {
+    this.hop = function () {
       if (this.onGround) {
         this.img = marioMoving;
         this.ya = 45;
@@ -40,127 +40,126 @@ var sketchProc = function(p) {
       }
     };
 
-    this.reduceYAcceleration = function() {
+    this.reduceYAcceleration = function () {
       this.ya -= (GRAVITY * 0.3);
-    }
+    };
 
-    this.fall = function() {
+    this.fall = function () {
       this.img = marioStanding;
       this.y += 5;
     };
 
-    this.moveRight = function() {
+    this.moveRight = function () {
       this.img = marioMoving;
       this.x += 5;
     };
 
-    this.moveLeft = function() {
+    this.moveLeft = function () {
       this.img = marioMoving;
       this.x -= 5;
     };
 
-    this.checkOnGround = function() {
+    this.checkOnGround = function () {
       if (this.y <= p.height - 200) {
         this.onGround = false;
       } else {
         this.onGround = true;
         this.ya = 0;
-      };
-    }
+      }
+    };
   };
 
-  var StartButton = function() {
+  const StartButton = function () {
     this.x = 761;
     this.y = 508;
     this.w = 200;
 
-    this.is_clicked = function(x, y) {
+    this.is_clicked = function (x, y) {
       if (x >= this.x && x <= (this.x + this.w) && y >= this.y && y <= (this.y + this.w)) {
         is_started = true;
       }
-    }
-  }
+    };
+  };
 
-  var Background = function(background_image, xVal, yVal) {
+  const Background = function (background_image, xVal, yVal) {
     this.x = xVal;
     this.y = yVal;
     this.acc = ACCELERATION;
     this.image = background_image;
 
-    this.draw = function() {
+    this.draw = function () {
       this.x -= this.acc;
-      p.image(this.image,this.x,this.y);
+      p.image(this.image, this.x, this.y);
       if (this.x === (xVal - 4448)) {
-        this.x += 4448
+        this.x += 4448;
       }
-    }
-  }
+    };
+  };
 
 
-  var Jerry = function(x, y) {
+  const Jerry = function (x, y) {
     this.x = x;
     this.y = y;
 
-    this.draw = function() {
+    this.draw = function () {
       this.x -= (ACCELERATION * 2);
-      p.image(jerryStanding,this.x,this.y);
-    }
-  }
+      p.image(jerryStanding, this.x, this.y);
+    };
+  };
 
-  processInput = function() {
-    if(keys[37]) mario.moveLeft();
-    if(keys[32]) mario.hop(); else mario.fall();
-    if(keys[39]) mario.moveRight();
+  processInput = function () {
+    if (keys[37]) mario.moveLeft();
+    if (keys[32]) mario.hop(); else mario.fall();
+    if (keys[39]) mario.moveRight();
   };
 
   var mario = new Mario(30, 750, 3);
-  var j1 = p.random(4448)
-  var j2 = p.random(4448)
-  var j3 = p.random(4448)
-  var jerry1 = new Jerry(j1, 550)
-  var jerry2 = new Jerry(j2, 550)
-  var jerry3 = new Jerry(j3, 550)
-  var start_button = new StartButton();
-  var background;
-  var background2;
+  const j1 = p.random(4448);
+  const j2 = p.random(4448);
+  const j3 = p.random(4448);
+  const jerry1 = new Jerry(j1, 550);
+  const jerry2 = new Jerry(j2, 550);
+  const jerry3 = new Jerry(j3, 550);
+  const start_button = new StartButton();
+  let background;
+  let background2;
 
-  var brickXs = [];
+  const brickXs = [];
 
-  p.preload = function() {
-    p.soundFormats("m4a");
-    // brickImg = p.loadImage("https://crossorigin.me/http://img4.imagetitan.com/img4/small/15/15_brick.jpg");
-    marioStanding = p.loadImage("https://cdn.pbrd.co/images/H9XEWb5.png");
-    marioMoving = p.loadImage("https://cdn.pbrd.co/images/H9XEoJo.png");
-    start_screen = p.loadImage("assets/title.png");
+  p.preload = function () {
+    p.soundFormats('m4a');
+    brickImg = p.loadImage("assets/jerry.png");
+    marioStanding = p.loadImage("assets/standing.jpg");
+    marioMoving = p.loadImage("assets/meseeks.jpg");
+    start_screen = p.loadImage('assets/title.png');
     jumpSound = p.loadSound('assets/cando_audio.m4a');
     background_music = p.loadSound('assets/Background_music.mp3');
     canDo = p.loadSound('assets/mrs_mooseeks.m4a');
     fulfillMyPurpose = p.loadSound('assets/fulfill_my_purpose.m4a');
     hesTryin = p.loadSound("assets/Oooo He's Tryin.m4a");
-    background_image = p.loadImage("assets/background.png");
-    jerryStanding = p.loadImage("assets/jerry.png");
+    background_image = p.loadImage('assets/background.png');
+    jerryStanding = p.loadImage('assets/jerry.png');
   };
 
-  p.setup = function() {
+  p.setup = function () {
     p.frameRate(30);
-    var canvas = p.createCanvas(1000, 772.72);
-    brickXs.push(background_image.width*2);
+    const canvas = p.createCanvas(1000, 772.72);
+    brickXs.push(background_image.width * 2);
     background = new Background(background_image, 0, 0);
     background2 = new Background(background_image, 4448, 0);
-    p.createP("Press spacebar to jump.");
-    p.createP("Press left & right arrow keys to move");
+    p.createP('Press spacebar to jump.');
+    p.createP('Press left & right arrow keys to move');
   };
 
-  var PickSound = function() {
+  var PickSound = function () {
     return p.random([
       canDo,
       fulfillMyPurpose,
       hesTryin,
     ]);
-  }
+  };
 
-  p.draw = function(){
-
+  p.draw = function () {
     if (!is_started) {
       if (!background_music.isPlaying()) {
         background_music.setVolume(0.5);
@@ -175,7 +174,7 @@ var sketchProc = function(p) {
     } else {
       p.background(227, 254, 255);
       p.fill(130, 79, 43);
-      p.rect(0, p.height*0.90, p.width, p.height*0.10);
+      p.rect(0, p.height * 0.90, p.width, p.height * 0.10);
       processInput();
       background.draw();
       background2.draw();
@@ -187,15 +186,14 @@ var sketchProc = function(p) {
     }
   };
 
-  p.keyPressed = function(){
+  p.keyPressed = function () {
     keys[p.keyCode] = true;
   };
 
-  p.keyReleased = function(){
+  p.keyReleased = function () {
     keys[p.keyCode] = false;
   };
 };
 
 
-
-new p5(sketchProc, document.getElementById("canvasContainer"));
+new p5(sketchProc, document.getElementById('canvasContainer'));
