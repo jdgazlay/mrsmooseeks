@@ -129,8 +129,8 @@ const sketchProc = function (p) {
   p.preload = function () {
     p.soundFormats('m4a');
     brickImg = p.loadImage("assets/jerry.png");
-    marioStanding = p.loadImage("assets/standing.jpg");
-    marioMoving = p.loadImage("assets/meseeks.jpg");
+    marioStanding = p.loadImage("assets/running.png");
+    marioMoving = p.loadImage("assets/jumping.png");
     start_screen = p.loadImage('assets/title.png');
     jumpSound = p.loadSound('assets/cando_audio.m4a');
     background_music = p.loadSound('assets/Background_music.mp3');
